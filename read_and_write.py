@@ -12,7 +12,7 @@ import csv
 import os
 
 def write_xls(column_name,values,save_path): 
-    sheet_name = '输出表'
+    sheet_name = u'输出表'
     book = xlwt.Workbook(encoding = 'utf8',style_compression=0)
     sheet = book.add_sheet(sheet_name)
     tag = 0
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     #values = read_csv('outputcsv.csv')
     #write_xls('',values,'xls01.xls')
     #output = read_xls_allsheets('xls01.xls',False)
-    output = read_xls_allsheets('xls01.xls',True)
+    output = read_xls_allsheets('sdir'+os.sep+'xlsx01.xlsx',False)
     print(len(output))
-    
+    print(output)
     
