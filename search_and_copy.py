@@ -10,14 +10,16 @@ Created on 2018年10月19日
 import os
 
 def search_file(path,extension):
+    '''遍历路径path下所有目录和文件，返回后缀符合extension文件的列表'''
     list_files = []
-    for root,dirs,files in os.walk(path):
+    for root,dirs,files in os.walk(path):   #遍历指定路径path下所有目录和文件
         for name in files:
             if name[-len(extension):]==extension:
-                list_files.append(root+os.sep+name)
+                list_files.append(root+os.sep+name)  #将后缀符合extension变量的文件添加至list_files
     return list_files
 
 def copy_file(s_file,t_file):
+    '''将文件s_file的内容复制到文件t_file'''
     with open(s_file,'r') as f_r:
         with open(t_file,'w') as f_w:
             f_w.write(f_r.read())
