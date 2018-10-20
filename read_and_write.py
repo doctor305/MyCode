@@ -25,9 +25,12 @@ def read_xls(path):
     pass
 
 def write_csv(column_name,values,save_path):
-    out = open(save_path,'w', newline='')
-    csv_write = csv.writer(out,dialect='excel')
-    csv_write.writerow(stu1)
+    '''将values中的内容写入csv中，其中传输变量column_name格式为列表,values为列表的列表'''
+    csv_write = csv.writer(open(save_path,'w', newline=''),dialect='excel')
+    if column_name != '':
+        csv_write.writerow(column_name)
+    for line in values:
+        csv_write.writerow(line.strip().split(','))
 
 def read_csv(path):
     pass
@@ -58,6 +61,7 @@ if __name__ == "__main__":
     #read_csv()
     #write_txt()
     values = read_txt(path)
-    write_txt('',values,'outputtxt.csv')
+    #write_txt('',values,'outputtxt.csv')
+    write_csv('',values,'outputcsv.csv')
     
     
