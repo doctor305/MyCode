@@ -88,25 +88,30 @@ def read_txt(path):
             output.append(i.strip('\t\n'))
     return output
 
-def write_xlsx():
-    workbook=xlsxwriter.Workbook('woork12.xlsx')
-
- 
-
-worksheet=workbook.add_worksheet()
+def write_xlsx(column_name,values,save_path):
+    workbook = xlsxwriter.Workbook(save_path)
+    sheet = workbook.add_worksheet()
+    tag = 0
+    if column_name != '':    #当输入的column_name不为空时，空出一行插入表头，置tag值为1，随后插入内容时的行号在原有值基础上增1
+        for n in range(len(column_name)):
+            sheet.write(0,n,column_name[n])
+        tag = 1
+    for m in range(len(values)):
+        for l in range(len(values[0])):
+            sheet.write(m+tag,l,values[m][l])
+    workbook.close()
 
 if __name__ == "__main__":
     #path = 'sdir'+os.sep+'test01.txt'
     values = []
     for i in range(100000):
         values.append([str(i),'A'+str(i),str(i*5)])
-    
+    print(len(values))
     #write_txt('',values,'outputtxt.csv')
     #write_csv('',values,'outputcsv.csv')
     #values = read_csv('outputcsv.csv')
-    write_xls('',values,'xls01.xlsx')
+    write_xlsx('',values,'xls01.xlsx')
     #output = read_xls_allsheets('xls01.xls',False)
     #output = read_xls_allsheets('sdir'+os.sep+'xlsx01.xlsx',False)
-    #print(len(output))
-    #print(output)
+
     

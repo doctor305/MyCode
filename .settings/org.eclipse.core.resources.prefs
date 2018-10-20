@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
+encoding/connect_to_mssql.py=utf-8
+encoding/connect_to_sqlite.py=utf-8
 encoding/read_and_write.py=utf-8
 encoding/search_and_copy.py=utf-8
