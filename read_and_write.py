@@ -1,7 +1,7 @@
 #!/usr/bin/evn python
 #-*- coding:utf-8 -*-
 '''
-Created on 2018��10��19��
+Created on 2018年10月19日
 
 @author: jinfeng
 '''
@@ -12,7 +12,7 @@ import csv
 import os
 
 def write_xls(column_name,values,save_path): 
-    sheet_name = '查询结果'
+    sheet_name = '输出表'
     book = xlwt.Workbook(encoding = 'utf8',style_compression=0)
     sheet = book.add_sheet(sheet_name)
     tag = 0
@@ -26,12 +26,34 @@ def write_xls(column_name,values,save_path):
     book.save(save_path)
 
 def read_xls(path):
-    '''excel电子表单工作表读取，将工作表内容通过列表形式返回'''
-    pass
+    '''excel电子表单个工作表读取，将工作表内容通过列表形式返回，只读取电子表中的第一个sheet'''
+    workbook = xlrd.open_workbook(path)
+    output = []
+    table = workbook.sheet_by_index(0)
+    for i in range(table.nrows):
+        output.append(table.row_values(i))
+    return output
     
 def read_xls_allsheets(path,tag_columnname):
-    '''excel电子表多工作表读取，将多个工作表内容合并在一起通过列表形式返回,多个工作表格式必须相同'''
-    pass
+    '''excel电子表多工作表读取，将多个工作表内容合并在一起通过列表形式返回,多个工作表格式必须相同
+    tag_columnname表示是否含有表头，工作表不含表头,tag_columnname为False，含有表头,tag_columnname为True，读取数据时跳过第一行'''
+    workbook = xlrd.open_workbook(path)
+    output = []
+    columnname = []
+    for i in range(len(workbook.sheet_names())):
+        table = workbook.sheet_by_index(i)
+        if table.nrows>0:
+            for j in range(table.nrows):
+                if tag_columnname and j == 0:
+                    if len(columnname)==0:
+                        columnname.append(table.row_values(j))  #将表头插入列表columnname中，以便在最终的返回列表output中插入表头
+                    continue  #含有表头的工作表读取数据时跳过第一行
+                output.append(table.row_values(j))
+    if tag_columnname:
+        return columnname+output
+    else:
+        return output
+    
 
 def write_csv(column_name,values,save_path):
     '''将values中的内容写入csv中，其中传输变量column_name格式为列表,values为列表的列表'''
@@ -39,7 +61,7 @@ def write_csv(column_name,values,save_path):
     if column_name != '':
         csv_write.writerow(column_name)
     for line in values:
-#        csv_write.writerow(line.strip('\n').split(','))
+###        csv_write.writerow(line.strip('\n').split(','))
         csv_write.writerow(line)
 
 def read_csv(path):
@@ -78,7 +100,10 @@ if __name__ == "__main__":
     #values = read_txt(path)
     #write_txt('',values,'outputtxt.csv')
     #write_csv('',values,'outputcsv.csv')
-    values = read_csv('outputcsv.csv')
-    write_xls('',values,'xls01.xls')
+    #values = read_csv('outputcsv.csv')
+    #write_xls('',values,'xls01.xls')
+    #output = read_xls_allsheets('xls01.xls',False)
+    output = read_xls_allsheets('xls01.xls',True)
+    print(len(output))
     
     
