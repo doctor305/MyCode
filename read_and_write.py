@@ -10,6 +10,7 @@ import xlrd
 import xlwt
 import csv
 import os
+import xlsxwriter
 
 def write_xls(column_name,values,save_path): 
     sheet_name = u'输出表'
@@ -87,23 +88,25 @@ def read_txt(path):
             output.append(i.strip('\t\n'))
     return output
 
+def write_xlsx():
+    workbook=xlsxwriter.Workbook('woork12.xlsx')
+
+ 
+
+worksheet=workbook.add_worksheet()
+
 if __name__ == "__main__":
-    path = 'sdir'+os.sep+'test01.txt'
-#     for i in range(100):
-#         with open(path,'a') as f:
-#             f.write(str(i)+','+'A'+str(i)+','+str(i*5)+'\t\n')
-    #write_xls()
-    #read_xls()
-    #write_csv()
-    #read_csv()
-    #write_txt()
-    #values = read_txt(path)
+    #path = 'sdir'+os.sep+'test01.txt'
+    values = []
+    for i in range(100000):
+        values.append([str(i),'A'+str(i),str(i*5)])
+    
     #write_txt('',values,'outputtxt.csv')
     #write_csv('',values,'outputcsv.csv')
     #values = read_csv('outputcsv.csv')
-    #write_xls('',values,'xls01.xls')
+    write_xls('',values,'xls01.xlsx')
     #output = read_xls_allsheets('xls01.xls',False)
-    output = read_xls_allsheets('sdir'+os.sep+'xlsx01.xlsx',False)
-    print(len(output))
-    print(output)
+    #output = read_xls_allsheets('sdir'+os.sep+'xlsx01.xlsx',False)
+    #print(len(output))
+    #print(output)
     
