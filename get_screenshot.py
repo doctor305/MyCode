@@ -1,7 +1,18 @@
 #!/usr/bin/evn python
 #-*- coding:utf-8 -*-
 '''
-Created on 2018Äê10ÔÂ19ÈÕ
+Created on 2018å¹´10æœˆ19æ—¥
 
 @author: jinfeng
 '''
+
+
+from PIL import ImageGrab
+
+def get_screenshot(path):
+    im = ImageGrab.grab()
+    im.save(path,'jpeg')
+    
+
+if __name__ == '__main__':
+    get_screenshot("screenshot.jpg")

@@ -19,3 +19,9 @@
 >
 > 增加访问mssql与sqlite常用函数
 >
+
++ 2018年10月21日
+> 利用PIL增加截屏函数get_screenshot
+>
+> 增加按照文件名与内容进行文件筛选的函数 search_file_by_key 和 search_filecontent_by_key
+>
