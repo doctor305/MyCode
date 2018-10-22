@@ -101,6 +101,10 @@ def write_xlsx(column_name,values,save_path):
             sheet.write(m+tag,l,values[m][l])
     workbook.close()
 
+def Consolidated():
+    '''合并当前目录下所有文本数据，所合并文本数据的格式必须一致'''
+    pass
+
 if __name__ == "__main__":
     #path = 'sdir'+os.sep+'test01.txt'
     values = []

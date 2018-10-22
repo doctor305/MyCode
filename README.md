@@ -25,3 +25,6 @@
 >
 > 增加按照文件名与内容进行文件筛选的函数 search_file_by_key 和 search_filecontent_by_key
 >
+
++ 2018年10月22日
+> 增加批量合并文本和excel电子表数据的函数
