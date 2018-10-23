@@ -102,7 +102,15 @@ def write_xlsx(column_name,values,save_path):
             sheet.write(m+tag,l,values[m][l])
     workbook.close()
 
-def Consolidated(path,extension,save_path):
+def consolidated(path,extension,save_path):
+    '''合并当前目录下所有文本数据，所合并文本数据的格式必须一致'''
+    filelist = search_file(path,extension)
+    output = []
+    for file in filelist:
+        output += read_txt(file)
+    write_txt('',output,save_path)
+    
+def consolidated_advanced(path,extension,save_path):
     '''合并当前目录下所有文本数据，所合并文本数据的格式必须一致'''
     filelist = search_file(path,extension)
     output = []
@@ -111,17 +119,17 @@ def Consolidated(path,extension,save_path):
     write_txt('',output,save_path)
 
 if __name__ == "__main__":
-    #path = 'sdir'+os.sep+'test01.txt'
-#     values = []
-#     for i in range(100000):
-#         values.append([str(i),'A'+str(i),str(i*5)])
-#     print(len(values))
+#    path = 'sdir'+os.sep+'test03.csv'
+#    values = []
+#    for i in range(10):
+#        values.append([str(i),'New'+str(i),str(i*10)])
+#    print(len(values))
     #write_txt('',values,'outputtxt.csv')
-    #write_csv('',values,'outputcsv.csv')
+#    write_csv('',values,path)
     #values = read_csv('outputcsv.csv')
     #write_xlsx('',values,'xls01.xlsx')
     #output = read_xls_allsheets('xls01.xls',False)
     #output = read_xls_allsheets('sdir'+os.sep+'xlsx01.xlsx',False)
-    Consolidated('.','.txt','result.txt')
+    #consolidated('.','.txt','result.txt')
 
     
