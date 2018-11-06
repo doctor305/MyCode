@@ -10,25 +10,28 @@ Created on 2018年10月31日
 import zipfile
 from threading import Thread
 import time
+import os
 
 
-def unzip_by_dic(zipfile,pswd_list):
-    global tag
-    print("Start!")
-    print(len(pswd_list))
-    print(tag)
+def unzip_by_dic(path,pswd_list,no):
+    newpath = path+str(no)
+    with open(path,'rb') as f_r:
+        with open(newpath,'wb') as f_w:
+            f_w.write(f_r.read()) 
+    zfile = zipfile.ZipFile(newpath)
+    print(u"No.%d号线程已开始运行，对%d个常用密码进行测试 !" % (no,len(pswd_list)))
     for pswd in pswd_list:
-        if tag == True:
-            print("End!")
-            break
         try:
-            zipfile.extractall(pwd=pswd.encode('utf8'))
-            print('Password is %s' % pswd)
-            tag = True
-            print("End!")
+            zfile.extractall(pwd=pswd.encode('utf8'))
+            print(u"No.%d号线程运行结束 !\n 加密zip文件--%s 的密码为 ：  %s" % (no,path,pswd))
+            zfile.close()
+            os.remove(newpath)
             break
         except:
             continue
+    else:
+        zfile.close()
+        os.remove(newpath)
         
     
 def get_pwlist():
@@ -40,25 +43,21 @@ def get_pwlist():
     return pwlist
 
 def main():
-    global tag
+    global path
     path = 'test.zip'
-    num_thread = 5
-    tag = False
+    num_thread = 10
     time_start = time.time()
     pwlist = get_pwlist()
-    print(len(pwlist))
-    zfile = zipfile.ZipFile(path)
+    
     step = len(pwlist)//num_thread+1
     for n in range(num_thread):
-        t = Thread(target = unzip_by_dic,args = (zfile,pwlist[step*n:step*n+step],))
+        t = Thread(target = unzip_by_dic,args = (path,pwlist[step*n:step*n+step],n+1,))
         t.start()
     t.join()
-    print(tag)
-    print('End')
     time_end = time.time()
     time_use = time_end - time_start
     print(u'用时 %d时%d分%d秒' % (time_use//3600,time_use%3600//60,time_use%60))
-        
+    
 
 if __name__ == '__main__':
     main()
