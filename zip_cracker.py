@@ -14,6 +14,7 @@ import os
 
 
 def unzip_by_dic(path,pswd_list,no):
+    global tag
     newpath = path+str(no)
     with open(path,'rb') as f_r:
         with open(newpath,'wb') as f_w:
@@ -21,17 +22,19 @@ def unzip_by_dic(path,pswd_list,no):
     zfile = zipfile.ZipFile(newpath)
     print(u"No.%d号线程已开始运行，对%d个常用密码进行测试 !" % (no,len(pswd_list)))
     for pswd in pswd_list:
-        try:
-            zfile.extractall(pwd=pswd.encode('utf8'))
-            print(u"No.%d号线程运行结束 !\n 加密zip文件--%s 的密码为 ：  %s" % (no,path,pswd))
-            zfile.close()
-            os.remove(newpath)
+        if not tag:
+            try:
+                zfile.extractall(pwd=pswd.encode('utf8'))
+                print(u"No.%d号线程运行结束 !\n 加密zip文件--%s 的密码为 ：  %s" % (no,path,pswd))
+                tag = True
+                break
+            except:
+                continue
+        else:
             break
-        except:
-            continue
-    else:
-        zfile.close()
-        os.remove(newpath)
+    zfile.close()
+    os.remove(newpath)
+    print(u"No.%d号线程运行结束 !" % no)
         
     
 def get_pwlist():
@@ -43,7 +46,8 @@ def get_pwlist():
     return pwlist
 
 def main():
-    global path
+    global tag
+    tag = False
     path = 'test.zip'
     num_thread = 10
     time_start = time.time()
