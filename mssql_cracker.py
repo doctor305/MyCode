@@ -72,44 +72,47 @@ def main_cracker(win):
     time_use = time_end - time_start
     print(u'用时 %d时%d分%d秒' % (time_use//3600,time_use%3600//60,time_use%60))
     
-def main():
-    windows = tk.Tk()
-    windows.geometry('350x300')
-    windows.resizable(False, False)
-    windows.title("MSSQL密码破解 ")
+class CRACKER(object):
+    def __init__(self):
+        windows = tk.Tk()
+        windows.geometry('350x300')
+        windows.resizable(False, False)
+        windows.title("MSSQL密码破解 ")
+        label = ttk.Label(windows,text=u'服务器地址：')
+        label.grid(row=0,column=0, padx=6,pady=10, sticky=tk.W)
+        vartext = tk.StringVar()
+        entry = tk.Entry(windows,width=25,textvariable=vartext)
+        entry.grid(row=0,column=1,padx=6,pady=10, sticky=tk.W)
+        button = tk.Button(windows,width=6,text="测试密码",command=select_excel)
+        button.grid(row=0,column=2,padx=6,pady=8,rowspan=2, sticky=tk.W)
+        label = ttk.Label(windows,text=u'账号：')
+        label.grid(row=1,column=0, padx=6,pady=10, sticky=tk.W)
+        vartext = tk.StringVar()
+        entry = tk.Entry(windows,width=25,textvariable=vartext)
+        entry.grid(row=1,column=1,padx=6,pady=10, sticky=tk.W)
+        scr = scrolledtext.ScrolledText(windows, width=30, height=10, wrap=tk.WORD)  
+        scr.grid(column=0, row=2, sticky='WE', columnspan=3) 
     
-    def _quit():  
+        windows.mainloop()
+    
+    def _quit(self):  
         windows.quit()  
         windows.destroy()  
         exit()  
         
-    def msg_datecheck():
+    def msg_datecheck(self):
         mBox.showwarning("title","text")
         
-    def select_excel():
+    def select_excel(self):
         #filename=asksaveasfilename(parent = windows,defaultextension='.xls')
         filename = askopenfilename(filetypes=[("excel格式",".xls")])
         vartext.set(filename)
         output = check_xls(filename)
         scr.insert(tk.END, output)
-    label = ttk.Label(windows,text=u'服务器地址：')
-    label.grid(row=0,column=0, padx=6,pady=10, sticky=tk.W)
-    vartext = tk.StringVar()
-    entry = tk.Entry(windows,width=25,textvariable=vartext)
-    entry.grid(row=0,column=1,padx=6,pady=10, sticky=tk.W)
-    button = tk.Button(windows,width=6,text="测试密码",command=select_excel)
-    button.grid(row=0,column=2,padx=6,pady=8,rowspan=2, sticky=tk.W)
-    label = ttk.Label(windows,text=u'账号：')
-    label.grid(row=1,column=0, padx=6,pady=10, sticky=tk.W)
-    vartext = tk.StringVar()
-    entry = tk.Entry(windows,width=25,textvariable=vartext)
-    entry.grid(row=1,column=1,padx=6,pady=10, sticky=tk.W)
-
-    scr = scrolledtext.ScrolledText(windows, width=30, height=10, wrap=tk.WORD)  
-    scr.grid(column=0, row=2, sticky='WE', columnspan=3) 
     
-    windows.mainloop()
+
+    
     
 if __name__ == "__main__":
-    main()
+    CRACKER()
 
