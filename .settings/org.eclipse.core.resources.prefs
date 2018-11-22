@@ -3,6 +3,7 @@ encoding/connect_to_mssql.py=utf-8
 encoding/connect_to_sqlite.py=utf-8
 encoding/get_screenshot.py=utf-8
 encoding/mssql_cracker.py=utf-8
+encoding/mssql_cracker_ui.py=utf-8
 encoding/read_and_write.py=utf-8
 encoding/search_and_copy.py=utf-8
 encoding/thread_test.py=utf-8
